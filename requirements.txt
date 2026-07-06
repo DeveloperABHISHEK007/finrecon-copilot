@@ -21,6 +21,7 @@ python-dotenv>=1.0     # load API keys / paths from .env
 # LLM SDKs (Phase 4) — install the one you use; both are light
 google-generativeai>=0.7   # Google Gemini free tier
 groq>=0.9                  # Groq free tier (fast). Optional alternative.
+truststore>=0.9            # use the OS cert store (fixes corporate-proxy TLS errors)
 
 # Governance / validation (Phase 5)
 pydantic>=2.7          # validate LLM JSON output against a schema

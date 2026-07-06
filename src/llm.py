@@ -17,6 +17,17 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+# Use the OS (Windows) certificate store for TLS. On a corporate network the
+# proxy re-signs HTTPS with a company root CA that Python's bundled certifi does
+# not trust, causing CERTIFICATE_VERIFY_FAILED. truststore fixes it by verifying
+# against the same store the browser uses. No-op / harmless if unavailable.
+try:
+    import truststore
+
+    truststore.inject_into_ssl()
+except Exception:  # noqa: BLE001 - never let cert setup break imports
+    pass
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import config  # noqa: E402
 
