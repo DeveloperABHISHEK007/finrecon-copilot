@@ -146,20 +146,40 @@ def extract_fields(note: str, complete_fn: CompleteFn | None = None) -> dict:
 
 
 def summarise_day(breaks: list[dict], complete_fn: CompleteFn | None = None) -> str:
-    """Summarise the day's exceptions into a short manager-friendly narrative."""
-    lines = [
-        f"- {b.get('break_type')} on {b.get('reference')} "
-        f"(value at risk {b.get('value_at_risk')})"
-        for b in breaks[:40]
-    ]
+    """Summarise the day's exceptions into a short manager-friendly narrative.
+
+    The numbers are computed HERE in code (rules for the math); the LLM only
+    phrases the pre-computed facts (AI for the language) and must not alter them.
+    """
+    from collections import Counter
+
+    def _var(b: dict) -> float:
+        try:
+            return float(b.get("value_at_risk") or 0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    n = len(breaks)
+    by_type = Counter(b.get("break_type") for b in breaks)
+    top_type, top_n = by_type.most_common(1)[0] if by_type else ("none", 0)
+    total_var = sum(_var(b) for b in breaks)
+    largest = max(breaks, key=_var, default=None)
+
+    facts = (
+        f"total_breaks = {n}\n"
+        f"breaks_by_cause = {dict(by_type)}\n"
+        f"most_common_cause = {top_type} ({top_n})\n"
+        f"total_value_at_risk = {total_var:,.2f}\n"
+        + (f"largest_exposure = {largest.get('reference')} "
+           f"({_var(largest):,.2f})" if largest else "largest_exposure = n/a")
+    )
     prompt = (
-        "You are writing a 3-4 sentence end-of-day reconciliation summary for a "
-        "finance manager. Be concise and factual. Mention the total number of "
-        "breaks, the most common cause, and the largest exposure. Do not invent "
-        "numbers.\n\nBREAKS:\n" + "\n".join(lines)
+        "Write a concise 3-4 sentence end-of-day reconciliation summary for a "
+        "finance manager using ONLY these pre-computed facts. Do NOT add, change "
+        "or recompute any numbers.\n\nFACTS:\n" + facts
     )
     fn = complete_fn or (lambda p: llm.complete(
-        p, system="You write concise finance summaries.", json_mode=False))
+        p, system="You write concise, factual finance summaries.", json_mode=False))
     return fn(prompt).strip()
 
 
