@@ -1,0 +1,44 @@
+# ── Secrets — NEVER commit ─────────────────────────────────────────────
+.env
+*.key
+*.pem
+secrets/
+
+# ── Python ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# ── Environments / IDE ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+
+# ── Data & generated artefacts (keep the repo light; regenerate locally) ─
+# Comment these back in if you WANT to commit sample data for the demo.
+data/*.csv
+data/notes/*.pdf
+data/notes/*.txt
+data/finrecon.db
+reports/*.xlsx
+reports/*.log
+
+# ── OS noise ───────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Jupyter ────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── Keep the empty folders tracked ─────────────────────────────────────
+!data/.gitkeep
+!data/notes/.gitkeep
+!reports/.gitkeep
