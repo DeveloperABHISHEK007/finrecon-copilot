@@ -116,7 +116,7 @@ python -m pytest -q                # smoke tests should pass
 ## Build order (8 phases)
 
 - [x] **Phase 0** — Setup, accounts, project skeleton, process map *(this scaffold)*
-- [ ] **Phase 1** — Generate realistic synthetic data (ledger, bank feed, notes)
+- [x] **Phase 1** — Generate realistic synthetic data (ledger, bank feed, notes) — `src/generate_data.py`
 - [ ] **Phase 2** — SQL reconciliation in SQLite
 - [ ] **Phase 3** — Python/pandas pipeline + exceptions report
 - [ ] **Phase 4** — GenAI layer (classify / extract / summarise) + eval harness
