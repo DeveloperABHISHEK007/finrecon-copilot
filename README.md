@@ -138,7 +138,7 @@ venv yet it prints the exact setup commands.
 - [x] **Phase 5** — Governance: PII masking, validation, audit log, human-in-the-loop — `src/governance.py`, `docs/control_matrix.md`
       *(live run: 33 PII redactions, AUTO 18 / HUMAN 15 / QUARANTINE 0, 35 audit records)*
 - [ ] **Phase 6** — Power Automate orchestration (schedule, approval, alerting)
-- [ ] **Phase 7** — Power BI dashboard (+ optional Power App)
+- [~] **Phase 7** — Power BI dashboard — dataset exporter `src/export_powerbi.py` + build guide `docs/powerbi_build_guide.md` *(build the `.pbix` in Power BI Desktop)*
 - [ ] **Phase 8** — Docs, GitHub polish, demo video
 
 ## Controls (the differentiator)

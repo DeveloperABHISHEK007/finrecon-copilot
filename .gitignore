@@ -30,6 +30,7 @@ data/finrecon.db
 reports/*.xlsx
 reports/*.log
 reports/*.csv
+powerbi/*.csv
 
 # ── OS noise ───────────────────────────────────────────────────────────
 .DS_Store
