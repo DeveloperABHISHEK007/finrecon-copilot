@@ -41,7 +41,7 @@ for _d in (DATA_DIR, NOTES_DIR, REPORTS_DIR):
 # --- Secrets / LLM settings -------------------------------------------
 load_dotenv(PROJECT_ROOT / ".env")
 
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini").lower()
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq").lower()
 LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0"))
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")

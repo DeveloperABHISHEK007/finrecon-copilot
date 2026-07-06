@@ -121,7 +121,8 @@ python -m pytest -q                # smoke tests should pass
       *(validated: 72 breaks found, 94.3% match rate, 0 false positives, reversals excluded)*
 - [x] **Phase 3** — Python/pandas pipeline + exceptions report — `src/reconcile.py`
       *(outer-merge + indicator; 8-sheet `exceptions_report.xlsx`; logged; writes `exceptions` table; validation PASS)*
-- [ ] **Phase 4** — GenAI layer (classify / extract / summarise) + eval harness
+- [x] **Phase 4** — GenAI layer (classify / extract / summarise) + eval harness — `src/genai.py`, `src/llm.py`, `src/evaluate_prompts.py`
+      *(Groq, temp 0, pydantic-validated JSON; offline eval shows prompt v1 78.8% → v2 100%. Add a Groq key to run live.)*
 - [ ] **Phase 5** — Governance: PII masking, validation, audit log, human-in-the-loop
 - [ ] **Phase 6** — Power Automate orchestration (schedule, approval, alerting)
 - [ ] **Phase 7** — Power BI dashboard (+ optional Power App)
