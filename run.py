@@ -47,8 +47,8 @@ from sqlalchemy import create_engine  # noqa: E402
 
 sys.path.insert(0, str(ROOT))
 import config  # noqa: E402
-from src import (evaluate_prompts, generate_data, genai, governance,  # noqa: E402
-                 llm, reconcile, reconcile_sql)
+from src import (evaluate_prompts, export_powerbi, generate_data,  # noqa: E402
+                 genai, governance, llm, make_dashboard, reconcile, reconcile_sql)
 
 
 def banner(title: str) -> None:
@@ -94,6 +94,10 @@ def main() -> int:
     banner("PHASE 5  Governance & controls")
     governance.main()
 
+    banner("PHASE 7  Reporting (Power BI dataset + local HTML dashboard)")
+    export_powerbi.main()
+    make_dashboard.main()
+
     # ── consolidated scoreboard ────────────────────────────────────────
     banner("SCOREBOARD  FinRecon Copilot end-to-end")
     n_breaks = int(len(breaks))
@@ -111,6 +115,7 @@ def main() -> int:
           f"(live={llm.available()})")
     print(f"  artefacts                : reports/exceptions_report.xlsx, "
           f"reports/audit.log, reports/approvals_queue.csv")
+    print(f"  dashboard (open me)      : reports/dashboard.html")
     print("  controls                 : PII masking, output validation, "
           "audit log, human-in-the-loop")
     print("\n  Rules for the math - AI for the language - human for the decisions.")

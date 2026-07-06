@@ -68,9 +68,15 @@ Total References = COUNTROWS(finrecon_powerbi)
 Total Breaks =
 CALCULATE(COUNTROWS(finrecon_powerbi), finrecon_powerbi[is_break] = 1)
 
-Matched = [Total References] - [Total Breaks]
+Matched =
+CALCULATE(COUNTROWS(finrecon_powerbi), finrecon_powerbi[break_type] = "matched")
 
-Match Rate % = DIVIDE([Matched], [Total References])          -- format as %
+-- Ledger-side references only (bank-only rows have a blank ledger_amount).
+-- Using this as the denominator keeps Match Rate consistent with the pipeline (94.3%).
+Ledger References =
+CALCULATE(COUNTROWS(finrecon_powerbi), NOT(ISBLANK(finrecon_powerbi[ledger_amount])))
+
+Match Rate % = DIVIDE([Matched], [Ledger References])         -- format as %
 
 Value at Risk = SUM(finrecon_powerbi[value_at_risk])
 
