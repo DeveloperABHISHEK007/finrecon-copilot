@@ -14,13 +14,38 @@ Phase 4/5 call the LLM if a key is set in .env; otherwise they run offline.
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
-import pandas as pd
-from sqlalchemy import create_engine
+# ── Bootstrap: make `python run.py` work from ANY interpreter ───────────
+# The project's dependencies live in ./.venv. If you launch this with a Python
+# that doesn't have them (e.g. base conda), we transparently re-exec using the
+# venv's interpreter so you don't have to remember to activate it.
+ROOT = Path(__file__).resolve().parent
+_VENV_PY = ROOT / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+try:
+    import pandas  # noqa: F401  - just probing that deps are installed
+except ModuleNotFoundError:
+    # Re-launch under the venv interpreter. We use subprocess (not os.execv)
+    # because on Windows execv detaches the child's stdout and returns early.
+    if _VENV_PY.exists() and Path(sys.executable).resolve() != _VENV_PY.resolve():
+        import subprocess
+        print(f"[run] using project venv: {_VENV_PY}", flush=True)
+        sys.exit(subprocess.run([str(_VENV_PY), str(ROOT / "run.py"), *sys.argv[1:]]).returncode)
+    print(
+        "\n[run] This Python has no project dependencies installed.\n"
+        "      Set up the virtual environment once:\n\n"
+        "        python -m venv .venv\n"
+        "        .venv\\Scripts\\python -m pip install -r requirements.txt\n\n"
+        "      Then run:  python run.py   (it will use the venv automatically)\n"
+    )
+    raise SystemExit(1)
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+import pandas as pd  # noqa: E402
+from sqlalchemy import create_engine  # noqa: E402
+
+sys.path.insert(0, str(ROOT))
 import config  # noqa: E402
 from src import (evaluate_prompts, generate_data, genai, governance,  # noqa: E402
                  llm, reconcile, reconcile_sql)
@@ -57,8 +82,14 @@ def main() -> int:
         print(" ", genai.summarise_day(breaks.to_dict("records")).replace("\n", "\n  "))
     else:
         print("(offline - add GROQ_API_KEY to .env for live LLM calls)")
-    print("\n-- prompt evaluation harness --")
-    evaluate_prompts.main()
+
+    # The prompt-eval harness makes ~66 LLM calls, so it's opt-in to keep the
+    # default run fast. Enable with:  python run.py --eval
+    if "--eval" in sys.argv:
+        print("\n-- prompt evaluation harness --")
+        evaluate_prompts.main()
+    else:
+        print("\n(skipping prompt-eval harness; run `python run.py --eval` for it)")
 
     banner("PHASE 5  Governance & controls")
     governance.main()

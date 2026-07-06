@@ -106,6 +106,18 @@ python config.py                   # prints resolved paths + whether a key is se
 python -m pytest -q                # smoke tests should pass
 ```
 
+### Run the whole pipeline (one command)
+
+```bash
+python run.py            # Phases 1-5 end to end + a scoreboard
+python run.py --eval     # also runs the 66-call prompt-eval harness (slower)
+# Windows: double-click run.bat
+```
+
+`run.py` auto-detects the project `.venv` and re-launches itself with it, so it
+works even if you forget to activate the environment. If you haven't created the
+venv yet it prints the exact setup commands.
+
 **Free API key (no credit card):**
 - **Gemini** — https://aistudio.google.com/ → *Get API key* → paste into `.env` as `GEMINI_API_KEY`.
 - **Groq** — https://console.groq.com/ → *API Keys* → paste into `.env` as `GROQ_API_KEY`.
