@@ -117,7 +117,8 @@ python -m pytest -q                # smoke tests should pass
 
 - [x] **Phase 0** — Setup, accounts, project skeleton, process map *(this scaffold)*
 - [x] **Phase 1** — Generate realistic synthetic data (ledger, bank feed, notes) — `src/generate_data.py`
-- [ ] **Phase 2** — SQL reconciliation in SQLite
+- [x] **Phase 2** — SQL reconciliation in SQLite — `sql/reconciliation.sql`, `src/load_db.py`, `src/reconcile_sql.py`
+      *(validated: 72 breaks found, 94.3% match rate, 0 false positives, reversals excluded)*
 - [ ] **Phase 3** — Python/pandas pipeline + exceptions report
 - [ ] **Phase 4** — GenAI layer (classify / extract / summarise) + eval harness
 - [ ] **Phase 5** — Governance: PII masking, validation, audit log, human-in-the-loop
