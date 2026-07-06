@@ -119,7 +119,8 @@ python -m pytest -q                # smoke tests should pass
 - [x] **Phase 1** — Generate realistic synthetic data (ledger, bank feed, notes) — `src/generate_data.py`
 - [x] **Phase 2** — SQL reconciliation in SQLite — `sql/reconciliation.sql`, `src/load_db.py`, `src/reconcile_sql.py`
       *(validated: 72 breaks found, 94.3% match rate, 0 false positives, reversals excluded)*
-- [ ] **Phase 3** — Python/pandas pipeline + exceptions report
+- [x] **Phase 3** — Python/pandas pipeline + exceptions report — `src/reconcile.py`
+      *(outer-merge + indicator; 8-sheet `exceptions_report.xlsx`; logged; writes `exceptions` table; validation PASS)*
 - [ ] **Phase 4** — GenAI layer (classify / extract / summarise) + eval harness
 - [ ] **Phase 5** — Governance: PII masking, validation, audit log, human-in-the-loop
 - [ ] **Phase 6** — Power Automate orchestration (schedule, approval, alerting)
