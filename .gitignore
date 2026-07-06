@@ -29,6 +29,7 @@ data/notes/*.txt
 data/finrecon.db
 reports/*.xlsx
 reports/*.log
+reports/*.csv
 
 # ── OS noise ───────────────────────────────────────────────────────────
 .DS_Store

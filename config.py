@@ -57,6 +57,12 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
 # A break above this value is "high-value" and must go to a human (Phase 5).
 HIGH_VALUE_THRESHOLD = 10_000.0
 
+# LLM classifications below this confidence are routed to a human (Phase 5).
+LOW_CONFIDENCE_THRESHOLD = 0.75
+
+# Sanity bound for validating an extracted/parsed amount (Phase 5 quarantine).
+MAX_REASONABLE_AMOUNT = 100_000_000.0
+
 # Amount differences below this are treated as a match (rounding tolerance).
 AMOUNT_TOLERANCE = 0.01
 
