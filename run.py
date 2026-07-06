@@ -58,8 +58,14 @@ def banner(title: str) -> None:
 
 
 def main() -> int:
-    banner("PHASE 1  Generate synthetic data")
-    generate_data.main()
+    if "--input" in sys.argv:
+        banner("INGEST  Bring-your-own-data (data/input/*.csv)")
+        from src import ingest
+        if ingest.main() != 0:
+            return 1
+    else:
+        banner("PHASE 1  Generate synthetic data")
+        generate_data.main()
 
     banner("PHASE 2  SQL reconciliation (validated vs ground truth)")
     reconcile_sql.main()
@@ -74,8 +80,14 @@ def main() -> int:
         "SELECT reference, break_type, value_at_risk FROM exceptions "
         "ORDER BY value_at_risk DESC", engine)
     if llm.available():
+        # Use a real note from the data if we have one, else a sample.
         note = ("ref REF-000113 keyed wrong, should be 151,881.14 not shown, "
                 "typo, 2026-06-20")
+        if config.NOTES_INDEX_CSV.exists():
+            ni = pd.read_csv(config.NOTES_INDEX_CSV)
+            if len(ni):
+                note = str(ni.iloc[0]["note_text"])
+        print(f"note    : {note}")
         print("classify:", genai.classify_note(note))
         print("extract :", genai.extract_fields(note))
         print("\nmanager end-of-day summary:")
@@ -84,8 +96,8 @@ def main() -> int:
         print("(offline - add GROQ_API_KEY to .env for live LLM calls)")
 
     # The prompt-eval harness makes ~66 LLM calls, so it's opt-in to keep the
-    # default run fast. Enable with:  python run.py --eval
-    if "--eval" in sys.argv:
+    # default run fast. Enable with:  python run.py --eval  (needs labelled data)
+    if "--eval" in sys.argv and config.GROUND_TRUTH_CSV.exists():
         print("\n-- prompt evaluation harness --")
         evaluate_prompts.main()
     else:

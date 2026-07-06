@@ -1,0 +1,12 @@
+Reference,Posting Date,Paid Amount,Account No,Currency,Remittance Note
+INV-1001,01 Jun 2026,"$1,250.00",ACC 55010,USD,
+INV-1002,02 Jun 2026,"3,400.00",ACC55011,USD,
+INV-1003,03 Jun 2026,"$9,000.00",ACC55012,USD,"amount keyed wrong - should be 90,000 not 9,000, typo on entry"
+INV-1004,04 Jun 2026,780.50,ACC55013,EUR,
+INV-1005,05 Jun 2026,"$2,000.00",ACC55014,USD,"entered twice by mistake - please dedupe, only one charge is real"
+INV-1005,05 Jun 2026,"$2,000.00",ACC55014,USD,"entered twice by mistake - please dedupe, only one charge is real"
+INV-1006,06 Jun 2026,"15,750.00",ACC55015,GBP,
+INV-1008,08 Jun 2026,640.00,ACC55017,USD,
+INV-1009,09 Jun 2026,"$12,500.00",ACC55018,USD,
+INV-1010,10 Jun 2026,"9,900.00",ACC55019,USD,
+BNK-2001,11 Jun 2026,$530.00,ACC70001,USD,"bank fee not booked in the ledger yet - needs posting our side"

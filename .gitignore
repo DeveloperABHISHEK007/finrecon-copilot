@@ -27,6 +27,10 @@ data/*.csv
 data/notes/*.pdf
 data/notes/*.txt
 data/finrecon.db
+
+# Your own input data stays local; the *.example.csv templates are tracked.
+data/input/*.csv
+!data/input/*.example.csv
 reports/*.xlsx
 reports/*.log
 reports/*.csv

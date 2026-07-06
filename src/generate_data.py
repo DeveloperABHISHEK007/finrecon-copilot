@@ -325,6 +325,11 @@ def main() -> None:
     truth_df = truth_df[cols].sort_values(["break_type", "reference"]).reset_index(drop=True)
     truth_df.to_csv(config.GROUND_TRUTH_CSV, index=False)
 
+    # notes_index.csv (reference -> note_text) is the shared note source used by
+    # governance/eval, so the synthetic and bring-your-own-data paths look alike.
+    notes_idx = truth_df[truth_df["note_text"].notna()][["reference", "note_text"]]
+    notes_idx.to_csv(config.NOTES_INDEX_CSV, index=False)
+
     # Summary (great to screenshot for the write-up).
     n_notes = len(list(config.NOTES_DIR.glob("note_*.*")))
     n_pdf = len(list(config.NOTES_DIR.glob("note_*.pdf")))

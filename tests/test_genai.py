@@ -28,6 +28,12 @@ def test_bad_category_is_rejected():
 
 
 def test_offline_v2_beats_v1_on_labelled_notes():
+    import pytest
+
+    import config
+    if not config.GROUND_TRUTH_CSV.exists():
+        pytest.skip("no labelled ground_truth.csv (provided-data mode) - run "
+                    "src.generate_data for the synthetic benchmark")
     df = ev.load_labelled()
     v1 = ev.run_version(df, "v1", live=False)["accuracy"]
     v2 = ev.run_version(df, "v2", live=False)["accuracy"]

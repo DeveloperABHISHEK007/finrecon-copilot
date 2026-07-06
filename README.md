@@ -109,10 +109,19 @@ python -m pytest -q                # smoke tests should pass
 ### Run the whole pipeline (one command)
 
 ```bash
-python run.py            # Phases 1-5 end to end + a scoreboard
+python run.py            # Phases 1-5 end to end + a scoreboard + dashboard
 python run.py --eval     # also runs the 66-call prompt-eval harness (slower)
 # Windows: double-click run.bat
 ```
+
+### Use your own CSVs instead of synthetic data
+
+```bash
+# put your files in data/input/ (see data/input/*.example.csv), then:
+python -m src.ingest     # auto-maps columns, cleans messy values, extracts notes
+python run.py --input    # reconcile + AI + governance + dashboard on YOUR data
+```
+Full details: **`docs/bring_your_own_data.md`**.
 
 `run.py` auto-detects the project `.venv` and re-launches itself with it, so it
 works even if you forget to activate the environment. If you haven't created the

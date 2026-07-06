@@ -28,6 +28,15 @@ DOCS_DIR = PROJECT_ROOT / "docs"
 LEDGER_CSV = DATA_DIR / "ledger.csv"
 BANK_FEED_CSV = DATA_DIR / "bank_feed.csv"
 GROUND_TRUTH_CSV = DATA_DIR / "ground_truth.csv"
+NOTES_INDEX_CSV = DATA_DIR / "notes_index.csv"   # reference -> note_text (both paths)
+
+# Bring-your-own-data (BYOD): drop your raw CSVs here and run `python -m src.ingest`.
+INPUT_DIR = DATA_DIR / "input"
+INPUT_LEDGER_CSV = INPUT_DIR / "ledger_raw.csv"
+INPUT_BANK_CSV = INPUT_DIR / "bank_raw.csv"
+
+# Canonical schema every downstream phase expects after ingest/generation.
+CANONICAL_COLUMNS = ("reference", "txn_date", "amount", "account", "currency")
 DB_PATH = DATA_DIR / "finrecon.db"
 DB_URL = f"sqlite:///{DB_PATH}"
 

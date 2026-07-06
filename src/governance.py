@@ -47,7 +47,8 @@ from src import genai, llm  # noqa: E402
 _PII_PATTERNS = [
     ("EMAIL", re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b")),
     ("IBAN", re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{10,30}\b")),
-    ("ACCT", re.compile(r"\bAC-?\d{6,}\b", re.IGNORECASE)),
+    # Account numbers: AC-12345678, ACC55010, ACCT 55010, ACCOUNT-1234...
+    ("ACCT", re.compile(r"\bAC(?:C|CT|COUNT)?-?\s?\d{4,}\b", re.IGNORECASE)),
     # Phone: a '+' country code (7+ digits) or grouped NNN-NNN-NNNN form.
     # Deliberately strict so it does NOT swallow ISO dates or money amounts.
     ("PHONE", re.compile(r"\b(?:\+\d{7,}|\(?\d{3}\)?[ -]\d{3}[ -]\d{4})\b")),
@@ -155,25 +156,37 @@ def route(value_at_risk: float | None, confidence: float | None,
 # Runner - apply all four controls over the breaks
 # ═══════════════════════════════════════════════════════════════════════
 def _load_inputs() -> pd.DataFrame:
-    """Breaks (with value_at_risk) + their note + the account to redact."""
-    gt = pd.read_csv(config.GROUND_TRUTH_CSV)
-    # value_at_risk comes from the reconciliation (exceptions table if present).
-    try:
-        from sqlalchemy import create_engine
-        exc = pd.read_sql("SELECT reference, value_at_risk FROM exceptions",
-                          create_engine(config.DB_URL))
-        gt = gt.merge(exc, on="reference", how="left")
-    except Exception:  # noqa: BLE001 - fall back to a rough value
-        gt["value_at_risk"] = gt[["ledger_amount", "bank_amount"]].abs().max(axis=1)
+    """Breaks that carry a note + their value_at_risk + the account to redact.
 
-    # account per reference (something real to redact), from ledger then bank.
+    Note source is notes_index.csv (written by BOTH the synthetic generator and
+    the BYOD ingester), falling back to ground_truth.csv. break_type and
+    value_at_risk come from the reconciled `exceptions` table, so only real
+    breaks-with-notes are processed.
+    """
+    if config.NOTES_INDEX_CSV.exists():
+        notes = pd.read_csv(config.NOTES_INDEX_CSV)[["reference", "note_text"]]
+    elif config.GROUND_TRUTH_CSV.exists():
+        notes = pd.read_csv(config.GROUND_TRUTH_CSV)[["reference", "note_text"]]
+    else:
+        return pd.DataFrame(columns=["reference", "note_text", "break_type",
+                                     "value_at_risk", "account"])
+    notes = notes[notes["note_text"].notna()]
+
+    from sqlalchemy import create_engine
+    try:
+        exc = pd.read_sql("SELECT reference, break_type, value_at_risk FROM exceptions",
+                          create_engine(config.DB_URL))
+        df = notes.merge(exc, on="reference", how="inner")
+    except Exception:  # noqa: BLE001 - no recon yet; process notes without value
+        df = notes.assign(break_type="unknown", value_at_risk=None)
+
     acct = {}
     for csv in (config.LEDGER_CSV, config.BANK_FEED_CSV):
         if csv.exists():
             d = pd.read_csv(csv)
             acct.update(dict(zip(d["reference"], d["account"])))
-    gt["account"] = gt["reference"].map(acct)
-    return gt[gt["note_text"].notna()].reset_index(drop=True)
+    df["account"] = df["reference"].map(acct)
+    return df.reset_index(drop=True)
 
 
 def main() -> int:

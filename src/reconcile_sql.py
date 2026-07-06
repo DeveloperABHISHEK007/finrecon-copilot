@@ -70,6 +70,9 @@ def print_summaries() -> None:
 
 def validate_against_ground_truth() -> bool:
     """Compare detected breaks to the seeded truth. Returns True if perfect."""
+    if not config.GROUND_TRUTH_CSV.exists():
+        print("\n=== Validation skipped (no ground_truth.csv - provided data) ===")
+        return True
     gt = pd.read_csv(config.GROUND_TRUTH_CSV)[["reference", "break_type"]]
     detected = _q("SELECT reference, break_type FROM breaks")
 
