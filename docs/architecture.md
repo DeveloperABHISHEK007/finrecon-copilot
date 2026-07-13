@@ -43,7 +43,7 @@
         └────────────────────────────────────────────────┘
 ```
 
-## Division of labour (the thing to explain in the interview)
+## Division of labour
 
 | Layer            | Owner              | Why                                            |
 |------------------|--------------------|------------------------------------------------|

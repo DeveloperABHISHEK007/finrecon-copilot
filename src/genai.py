@@ -1,14 +1,14 @@
 """
-Phase 4 - The GenAI layer (the star of the show).
+Phase 4 - The GenAI layer.
 
-For each break, the LLM reads the messy remittance note and does three things
-the JD names directly, each returning STRICT, VALIDATED JSON:
+For each break, the LLM reads the messy remittance note and does three things,
+each returning STRICT, VALIDATED JSON:
 
     classify_note(note)   -> TIMING | DUPLICATE | DATA_ERROR | MISSING (+confidence)
     extract_fields(note)  -> {reference, amount, date}
     summarise_day(rows)   -> short manager-friendly narrative (plain text)
 
-Rules that matter (say these in the interview):
+Rules that matter:
     - temperature 0 (config.LLM_TEMPERATURE) for repeatability
     - the LLM ONLY reads language - it NEVER does the reconciliation math
     - every JSON response is parsed and validated (pydantic) before use;

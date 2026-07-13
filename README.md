@@ -12,10 +12,9 @@ result to a dashboard — all wrapped in bank-grade controls.
 > the LLM only reads free text (fuzzy language work), and a person approves
 > anything that matters.
 
-Built as a capstone for a **GenAI & Automation Financial Analyst** role — it
-touches every line of the JD: SQL, Python, generative AI + prompt engineering,
-Microsoft Power Platform, reconciliation, process automation, and
-governance/controls.
+It brings SQL, Python, generative AI + prompt engineering, Microsoft Power
+Platform, reconciliation, process automation, and governance/controls together
+in one end-to-end pipeline.
 
 ---
 
@@ -47,19 +46,19 @@ the "before vs after" process map.
 
 ---
 
-## JD → project map (interview cheat sheet)
+## Capabilities
 
-| JD requirement                                        | Where it's proven              |
+| Capability                                            | Where it's implemented         |
 |-------------------------------------------------------|--------------------------------|
-| Write SQL for extraction, reconciliation, validation  | Phase 2 — SQL reconciliation   |
+| SQL for extraction, reconciliation, validation        | Phase 2 — SQL reconciliation   |
 | Python scripts for processing, validation, reporting  | Phase 3 — Python pipeline      |
 | LLM integration: prompt design, testing, optimization | Phase 4 — GenAI layer + eval   |
-| Summarization, classification, information extraction  | Phase 4 — three LLM tasks      |
-| Manage structured AND unstructured data               | Phases 1–4 — ledger + notes    |
+| Summarization, classification, information extraction | Phase 4 — three LLM tasks      |
+| Managing structured AND unstructured data             | Phases 1–4 — ledger + notes    |
 | Rule-based AND generative AI automation               | Phases 2–4 — rules + AI        |
 | Microsoft Power Platform (Automate, Apps, BI)         | Phases 6–7 — flow, app, BI     |
 | Controls, governance, compliance, audit docs          | Phase 5 + 8 — controls & docs  |
-| Analyze processes, spot automation opportunities      | Phase 0 — process map          |
+| Process analysis & automation opportunities           | Phase 0 — process map          |
 | Deployment, monitoring, troubleshooting               | Phase 6 — scheduled + alerting |
 
 ---
@@ -79,7 +78,7 @@ finrecon-copilot/
   reports/         exceptions_report.xlsx, audit.log
   powerplatform/   flow_screenshots/, app_screenshots/   (Phase 6)
   powerbi/         FinRecon.pbix             (Phase 7)
-  docs/            architecture.md, process_map.md, STAR interview PDF   (Phase 8)
+  docs/            architecture.md, process_map.md, user manual         (Phase 8)
   tests/           test_smoke.py
   config.py        central paths, secrets loader, business rules
   .env.example     copy to .env and add your API key (never commit .env)

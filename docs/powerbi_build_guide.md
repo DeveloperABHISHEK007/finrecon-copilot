@@ -136,13 +136,13 @@ AVERAGE(finrecon_powerbi[confidence])                        -- format as %
 
 ---
 
-## Step 6 — What to screenshot (for the write-up / interview)
+## Step 6 — What to screenshot (for the write-up)
 
 - The full dashboard page (KPIs + charts).
 - The approvals-queue table (proves the maker-checker/human-in-the-loop control).
 - One DAX measure open (proves you built the model, not just dropped fields).
 
-## Interview talking points
+## Notes
 
 - "The dashboard reads the governed output — every row already went through PII
   masking, validation and the human-in-the-loop decision."

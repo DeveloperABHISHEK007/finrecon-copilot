@@ -27,7 +27,7 @@ truststore>=0.9            # use the OS cert store (fixes corporate-proxy TLS er
 pydantic>=2.7          # validate LLM JSON output against a schema
 
 # Docs / reporting helpers
-fpdf2>=2.7             # generate PDF artefacts (STAR doc, control matrix)
+fpdf2>=2.7             # generate the sample remittance-note PDFs
 
 # ── Dev / testing (optional but recommended) ───────────────────────────
 pytest>=8.0

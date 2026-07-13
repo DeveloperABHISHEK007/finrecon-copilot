@@ -1,5 +1,5 @@
 """
-Phase 5 - Governance & controls (the differentiator).
+Phase 5 - Governance & controls.
 
 The bank-grade wrapper that turns a clever script into something a regulated
 finance team can trust. Four controls, plus a runner that applies them to the
@@ -16,7 +16,7 @@ breaks end to end:
                                     OR failed-validation -> a person approves
                                     (the maker-checker control)
 
-Design point for the interview: the LLM only ever sees MASKED text, its output
+Design point: the LLM only ever sees MASKED text, its output
 is never used unless it passes validation, every decision is logged, and a human
 owns anything risky. That is "GenAI in a regulated environment".
 

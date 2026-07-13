@@ -3,7 +3,7 @@ Phase 4 (companion) - Prompt evaluation harness.
 
 Runs the classifier over the labelled remittance notes (from ground_truth.csv),
 computes accuracy, shows a confusion breakdown and the failures, and compares
-prompt version v1 vs v2 - i.e. the JD's "prompt testing, evaluation, optimization",
+prompt version v1 vs v2 - prompt testing, evaluation, and optimization,
 measured rather than guessed.
 
 Modes:
