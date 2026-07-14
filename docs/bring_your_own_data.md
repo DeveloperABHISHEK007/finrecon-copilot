@@ -89,5 +89,5 @@ Review the results exactly as before:
   (or extend `clean_frame` in `src/ingest.py`).
 - **Matching key:** reconciliation matches on `reference`. Both files must share
   the same reference values for rows that should reconcile.
-- To go back to the synthetic showcase: `python -m src.generate_data` then
+- To go back to the synthetic sample data: `python -m src.generate_data` then
   `python run.py`.

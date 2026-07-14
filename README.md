@@ -46,20 +46,20 @@ the "before vs after" process map.
 
 ---
 
-## Capabilities
+## What it does
 
-| Capability                                            | Where it's implemented         |
-|-------------------------------------------------------|--------------------------------|
-| SQL for extraction, reconciliation, validation        | Phase 2 — SQL reconciliation   |
-| Python scripts for processing, validation, reporting  | Phase 3 — Python pipeline      |
-| LLM integration: prompt design, testing, optimization | Phase 4 — GenAI layer + eval   |
-| Summarization, classification, information extraction | Phase 4 — three LLM tasks      |
-| Managing structured AND unstructured data             | Phases 1–4 — ledger + notes    |
-| Rule-based AND generative AI automation               | Phases 2–4 — rules + AI        |
-| Microsoft Power Platform (Automate, Apps, BI)         | Phases 6–7 — flow, app, BI     |
-| Controls, governance, compliance, audit docs          | Phase 5 + 8 — controls & docs  |
-| Process analysis & automation opportunities           | Phase 0 — process map          |
-| Deployment, monitoring, troubleshooting               | Phase 6 — scheduled + alerting |
+| Feature                                                           | Where       |
+|-------------------------------------------------------------------|-------------|
+| Exact ledger-vs-bank reconciliation in SQL                        | Phase 2     |
+| Python/pandas pipeline with validation and an Excel report        | Phase 3     |
+| LLM classification, extraction and summarization of break notes   | Phase 4     |
+| Prompt-evaluation harness (accuracy measured across versions)     | Phase 4     |
+| Works with both structured data and unstructured free-text notes  | Phases 1–4  |
+| Deterministic rules combined with generative AI                   | Phases 2–4  |
+| Power Platform orchestration and BI dashboards                    | Phases 6–7  |
+| Governance: PII masking, output validation, audit trail, approval | Phase 5     |
+| Process analysis and automation of a manual workflow              | Phase 0     |
+| Scheduled runs, logging and alerting                              | Phase 6     |
 
 ---
 
@@ -147,9 +147,9 @@ venv yet it prints the exact setup commands.
       *(live run: 33 PII redactions, AUTO 18 / HUMAN 15 / QUARANTINE 0, 35 audit records)*
 - [ ] **Phase 6** — Power Automate orchestration (schedule, approval, alerting)
 - [~] **Phase 7** — Dashboards — **local HTML dashboard** `src/make_dashboard.py` → `reports/dashboard.html` (open in any browser, no tools), plus Power BI dataset exporter `src/export_powerbi.py` + build guide `docs/powerbi_build_guide.md`
-- [ ] **Phase 8** — Docs, GitHub polish, demo video
+- [ ] **Phase 8** — Documentation
 
-## Controls (the differentiator)
+## Controls
 
 | Control              | How it's met                                             |
 |----------------------|----------------------------------------------------------|
